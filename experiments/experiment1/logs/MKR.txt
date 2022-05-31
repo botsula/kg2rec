@@ -1,0 +1,407 @@
+26 May 15:21    INFO  
+General Hyper Parameters:
+gpu_id = 0
+use_gpu = True
+seed = 2020
+state = INFO
+reproducibility = True
+data_path = dataset/ml-1m
+checkpoint_dir = saved
+show_progress = True
+save_dataset = False
+dataset_save_path = None
+save_dataloaders = False
+dataloaders_save_path = None
+log_wandb = False
+
+Training Hyper Parameters:
+epochs = 25
+train_batch_size = 1024
+learner = adam
+learning_rate = 0.001
+neg_sampling = {'uniform': 1}
+eval_step = 1
+stopping_step = 10
+clip_grad_norm = None
+weight_decay = 0.0
+loss_decimal_place = 4
+
+Evaluation Hyper Parameters:
+eval_args = {'group_by': 'user', 'order': 'RO', 'split': {'RS': [0.8, 0.1, 0.1]}, 'mode': 'full'}
+repeatable = False
+metrics = ['Recall', 'MRR', 'NDCG', 'Hit', 'Precision', 'MAP']
+topk = [10, 20, 30, 40, 50]
+valid_metric = MRR@10
+valid_metric_bigger = True
+eval_batch_size = 2048
+metric_decimal_place = 4
+
+Dataset Hyper Parameters:
+field_separator = 	
+seq_separator =  
+USER_ID_FIELD = user_id
+ITEM_ID_FIELD = item_id
+RATING_FIELD = rating
+TIME_FIELD = timestamp
+seq_len = None
+LABEL_FIELD = label
+threshold = None
+NEG_PREFIX = neg_
+load_col = {'inter': ['user_id', 'item_id', 'rating', 'timestamp'], 'kg': ['head_id', 'relation_id', 'tail_id'], 'link': ['item_id', 'entity_id']}
+unload_col = None
+unused_col = None
+additional_feat_suffix = None
+rm_dup_inter = None
+val_interval = None
+filter_inter_by_user_or_item = True
+user_inter_num_interval = [0,inf)
+item_inter_num_interval = [0,inf)
+alias_of_user_id = None
+alias_of_item_id = None
+alias_of_entity_id = None
+alias_of_relation_id = None
+preload_weight = None
+normalize_field = None
+normalize_all = None
+ITEM_LIST_LENGTH_FIELD = item_length
+LIST_SUFFIX = _list
+MAX_ITEM_LIST_LENGTH = 50
+POSITION_FIELD = position_id
+HEAD_ENTITY_ID_FIELD = head_id
+TAIL_ENTITY_ID_FIELD = tail_id
+RELATION_ID_FIELD = relation_id
+ENTITY_ID_FIELD = entity_id
+benchmark_filename = None
+
+Other Hyper Parameters: 
+wandb_project = recbole
+require_pow = False
+embedding_size = 64
+kg_embedding_size = 64
+low_layers_num = 1
+high_layers_num = 1
+reg_weight = 1e-06
+use_inner_product = True
+kge_interval = 3
+dropout_prob = 0.0
+MODEL_TYPE = ModelType.KNOWLEDGE
+MODEL_INPUT_TYPE = InputType.POINTWISE
+eval_type = EvaluatorType.RANKING
+device = cpu
+train_neg_sample_args = {'strategy': 'by', 'by': 1, 'distribution': 'uniform', 'dynamic': 'none'}
+eval_neg_sample_args = {'strategy': 'full', 'distribution': 'uniform'}
+
+
+26 May 15:21    INFO  ml-1m
+The number of users: 6041
+Average actions of users: 165.5975165562914
+The number of items: 3707
+Average actions of items: 269.88909875876953
+The number of inters: 1000209
+The sparsity of the dataset: 95.53358229599758%
+Remain Fields: ['entity_id', 'user_id', 'item_id', 'rating', 'timestamp', 'head_id', 'relation_id', 'tail_id']
+The number of entities: 79399
+The number of relations: 51
+The number of triples: 385923
+The number of items that have been linked to KG: 3655
+26 May 15:21    INFO  [Training]: train_batch_size = [1024] negative sampling: [{'uniform': 1}]
+26 May 15:21    INFO  [Evaluation]: eval_batch_size = [2048] eval_args: [{'group_by': 'user', 'order': 'RO', 'split': {'RS': [0.8, 0.1, 0.1]}, 'mode': 'full'}]
+26 May 15:21    INFO  MKR(
+  (user_embeddings_lookup): Embedding(6041, 64)
+  (item_embeddings_lookup): Embedding(79399, 64)
+  (entity_embeddings_lookup): Embedding(79399, 64)
+  (relation_embeddings_lookup): Embedding(51, 64)
+  (user_mlp): MLPLayers(
+    (mlp_layers): Sequential(
+      (0): Dropout(p=0.0, inplace=False)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Sigmoid()
+    )
+  )
+  (tail_mlp): MLPLayers(
+    (mlp_layers): Sequential(
+      (0): Dropout(p=0.0, inplace=False)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Sigmoid()
+    )
+  )
+  (cc_unit): Sequential(
+    (cc_unit0): CrossCompressUnit(
+      (fc_vv): Linear(in_features=64, out_features=1, bias=True)
+      (fc_ev): Linear(in_features=64, out_features=1, bias=True)
+      (fc_ve): Linear(in_features=64, out_features=1, bias=True)
+      (fc_ee): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (kge_mlp): MLPLayers(
+    (mlp_layers): Sequential()
+  )
+  (kge_pred_mlp): MLPLayers(
+    (mlp_layers): Sequential(
+      (0): Dropout(p=0.0, inplace=False)
+      (1): Linear(in_features=128, out_features=64, bias=True)
+      (2): Sigmoid()
+    )
+  )
+  (sigmoid_BCE): BCEWithLogitsLoss()
+)
+Trainable parameters: 10569796
+26 May 15:21    INFO  Train RS
+Train     0: 100%|██████████████████████████████████████████████| 1574/1574 [03:42<00:00,  7.06it/s]
+26 May 15:25    INFO  Train KG
+Train     0: 100%|████████████████████████████████████████████████| 377/377 [00:56<00:00,  6.62it/s]
+26 May 15:26    INFO  epoch 0 training [time: 279.85s, train_loss1: 798.2157, train_loss2: -384481.2222]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:48<00:00, 20.93it/s]
+26 May 15:31    INFO  epoch 0 evaluating [time: 288.71s, valid_score: 0.176700]
+26 May 15:31    INFO  valid result: 
+recall@10 : 0.0516    recall@20 : 0.083    recall@30 : 0.1122    recall@40 : 0.1369    recall@50 : 0.1571    mrr@10 : 0.1767    mrr@20 : 0.1853    mrr@30 : 0.1886    mrr@40 : 0.1902    mrr@50 : 0.1909    ndcg@10 : 0.0837    ndcg@20 : 0.0863    ndcg@30 : 0.0933    ndcg@40 : 0.1003    ndcg@50 : 0.1066    hit@10 : 0.4161    hit@20 : 0.5409    hit@30 : 0.6224    hit@40 : 0.6772    hit@50 : 0.7126    precision@10 : 0.0703    precision@20 : 0.0577    precision@30 : 0.0517    precision@40 : 0.0475    precision@50 : 0.0442    map@10 : 0.0368    map@20 : 0.0311    map@30 : 0.0303    map@40 : 0.0305    map@50 : 0.0309
+26 May 15:31    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 15:31    INFO  Train RS
+Train     1: 100%|██████████████████████████████████████████████| 1574/1574 [03:23<00:00,  7.73it/s]
+26 May 15:34    INFO  epoch 1 training [time: 203.60s, train_loss1: 767.0368, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:22<00:00, 23.03it/s]
+26 May 15:38    INFO  epoch 1 evaluating [time: 262.36s, valid_score: 0.186800]
+26 May 15:38    INFO  valid result: 
+recall@10 : 0.0563    recall@20 : 0.0987    recall@30 : 0.1307    recall@40 : 0.1617    recall@50 : 0.1864    mrr@10 : 0.1868    mrr@20 : 0.1971    mrr@30 : 0.2002    mrr@40 : 0.2017    mrr@50 : 0.2024    ndcg@10 : 0.0886    ndcg@20 : 0.0962    ndcg@30 : 0.1046    ndcg@40 : 0.1138    ndcg@50 : 0.1216    hit@10 : 0.4449    hit@20 : 0.5927    hit@30 : 0.6694    hit@40 : 0.7207    hit@50 : 0.7536    precision@10 : 0.0756    precision@20 : 0.0665    precision@30 : 0.0603    precision@40 : 0.056    precision@50 : 0.0521    map@10 : 0.0383    map@20 : 0.0336    map@30 : 0.0331    map@40 : 0.0338    map@50 : 0.0346
+26 May 15:38    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 15:38    INFO  Train RS
+Train     2: 100%|██████████████████████████████████████████████| 1574/1574 [03:23<00:00,  7.75it/s]
+26 May 15:42    INFO  epoch 2 training [time: 203.22s, train_loss1: 745.0342, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:41<00:00, 21.44it/s]
+26 May 15:46    INFO  epoch 2 evaluating [time: 281.85s, valid_score: 0.228200]
+26 May 15:46    INFO  valid result: 
+recall@10 : 0.0677    recall@20 : 0.1138    recall@30 : 0.1477    recall@40 : 0.1779    recall@50 : 0.2059    mrr@10 : 0.2282    mrr@20 : 0.2377    mrr@30 : 0.2403    mrr@40 : 0.2416    mrr@50 : 0.2425    ndcg@10 : 0.1086    ndcg@20 : 0.1151    ndcg@30 : 0.1229    ndcg@40 : 0.1317    ndcg@50 : 0.1405    hit@10 : 0.4983    hit@20 : 0.6339    hit@30 : 0.7007    hit@40 : 0.7449    hit@50 : 0.7831    precision@10 : 0.0893    precision@20 : 0.0762    precision@30 : 0.0675    precision@40 : 0.062    precision@50 : 0.0577    map@10 : 0.0498    map@20 : 0.0435    map@30 : 0.0424    map@40 : 0.0429    map@50 : 0.0438
+26 May 15:46    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 15:46    INFO  Train RS
+Train     3: 100%|██████████████████████████████████████████████| 1574/1574 [03:24<00:00,  7.71it/s]
+26 May 15:50    INFO  Train KG
+Train     3: 100%|████████████████████████████████████████████████| 377/377 [00:54<00:00,  6.92it/s]
+26 May 15:51    INFO  epoch 3 training [time: 258.64s, train_loss1: 710.2076, train_loss2: -385331.0060]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:28<00:00, 22.51it/s]
+26 May 15:55    INFO  epoch 3 evaluating [time: 268.43s, valid_score: 0.229700]
+26 May 15:55    INFO  valid result: 
+recall@10 : 0.0693    recall@20 : 0.1153    recall@30 : 0.152    recall@40 : 0.1851    recall@50 : 0.2143    mrr@10 : 0.2297    mrr@20 : 0.2392    mrr@30 : 0.242    mrr@40 : 0.2434    mrr@50 : 0.2441    ndcg@10 : 0.1099    ndcg@20 : 0.1172    ndcg@30 : 0.1265    ndcg@40 : 0.1366    ndcg@50 : 0.1461    hit@10 : 0.5022    hit@20 : 0.6386    hit@30 : 0.7075    hit@40 : 0.7551    hit@50 : 0.7889    precision@10 : 0.09    precision@20 : 0.0778    precision@30 : 0.0701    precision@40 : 0.0648    precision@50 : 0.0607    map@10 : 0.0506    map@20 : 0.0447    map@30 : 0.0441    map@40 : 0.0449    map@50 : 0.0461
+26 May 15:55    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 15:55    INFO  Train RS
+Train     4: 100%|██████████████████████████████████████████████| 1574/1574 [03:21<00:00,  7.80it/s]
+26 May 15:59    INFO  epoch 4 training [time: 201.86s, train_loss1: 687.7335, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:43<00:00, 21.29it/s]
+26 May 16:12    INFO  epoch 5 evaluating [time: 283.72s, valid_score: 0.250600]
+26 May 16:12    INFO  valid result: 
+recall@10 : 0.0787    recall@20 : 0.1332    recall@30 : 0.1775    recall@40 : 0.2136    recall@50 : 0.2478    mrr@10 : 0.2506    mrr@20 : 0.2606    mrr@30 : 0.2635    mrr@40 : 0.2647    mrr@50 : 0.2655    ndcg@10 : 0.1233    ndcg@20 : 0.1328    ndcg@30 : 0.1446    ndcg@40 : 0.1557    ndcg@50 : 0.1669    hit@10 : 0.5346    hit@20 : 0.6778    hit@30 : 0.7497    hit@40 : 0.7892    hit@50 : 0.825    precision@10 : 0.1023    precision@20 : 0.0885    precision@30 : 0.08    precision@40 : 0.0735    precision@50 : 0.0688    map@10 : 0.0575    map@20 : 0.0516    map@30 : 0.0515    map@40 : 0.0526    map@50 : 0.0542
+26 May 16:12    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 16:12    INFO  Train RS
+Train     6: 100%|██████████████████████████████████████████████| 1574/1574 [03:18<00:00,  7.91it/s]
+26 May 16:15    INFO  Train KG
+Train     6: 100%|████████████████████████████████████████████████| 377/377 [00:52<00:00,  7.12it/s]
+26 May 16:16    INFO  epoch 6 training [time: 251.86s, train_loss1: 647.0189, train_loss2: -385424.2979]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:27<00:00, 22.57it/s]
+26 May 16:20    INFO  epoch 6 evaluating [time: 267.67s, valid_score: 0.251100]
+26 May 16:20    INFO  valid result: 
+recall@10 : 0.0798    recall@20 : 0.1368    recall@30 : 0.182    recall@40 : 0.2208    recall@50 : 0.2562    mrr@10 : 0.2511    mrr@20 : 0.261    mrr@30 : 0.2639    mrr@40 : 0.2651    mrr@50 : 0.2658    ndcg@10 : 0.1246    ndcg@20 : 0.1356    ndcg@30 : 0.148    ndcg@40 : 0.1599    ndcg@50 : 0.1713    hit@10 : 0.5483    hit@20 : 0.6879    hit@30 : 0.7608    hit@40 : 0.8028    hit@50 : 0.8344    precision@10 : 0.1036    precision@20 : 0.0909    precision@30 : 0.0822    precision@40 : 0.0757    precision@50 : 0.0707    map@10 : 0.0581    map@20 : 0.0528    map@30 : 0.0529    map@40 : 0.0542    map@50 : 0.0558
+26 May 16:20    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 16:20    INFO  Train RS
+Train     7: 100%|██████████████████████████████████████████████| 1574/1574 [03:17<00:00,  7.97it/s]
+26 May 16:23    INFO  epoch 7 training [time: 197.60s, train_loss1: 635.6235, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:32<00:00, 22.19it/s]
+26 May 16:28    INFO  epoch 7 evaluating [time: 272.31s, valid_score: 0.285500]
+26 May 16:28    INFO  valid result: 
+recall@10 : 0.0908    recall@20 : 0.1495    recall@30 : 0.1954    recall@40 : 0.2328    recall@50 : 0.2689    mrr@10 : 0.2855    mrr@20 : 0.2944    mrr@30 : 0.297    mrr@40 : 0.2981    mrr@50 : 0.2988    ndcg@10 : 0.1418    ndcg@20 : 0.1502    ndcg@30 : 0.1624    ndcg@40 : 0.1738    ndcg@50 : 0.1853    hit@10 : 0.5838    hit@20 : 0.7109    hit@30 : 0.7772    hit@40 : 0.8142    hit@50 : 0.8445    precision@10 : 0.1156    precision@20 : 0.0972    precision@30 : 0.0871    precision@40 : 0.0795    precision@50 : 0.0738    map@10 : 0.0683    map@20 : 0.0607    map@30 : 0.0607    map@40 : 0.0619    map@50 : 0.0635
+26 May 16:28    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 16:28    INFO  Train RS
+Train     8: 100%|██████████████████████████████████████████████| 1574/1574 [03:23<00:00,  7.72it/s]
+26 May 16:31    INFO  epoch 8 training [time: 203.96s, train_loss1: 622.9121, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:51<00:00, 20.70it/s]
+26 May 16:36    INFO  epoch 8 evaluating [time: 291.90s, valid_score: 0.276100]
+26 May 16:36    INFO  valid result: 
+recall@10 : 0.0882    recall@20 : 0.1475    recall@30 : 0.1982    recall@40 : 0.2395    recall@50 : 0.2753    mrr@10 : 0.2761    mrr@20 : 0.2854    mrr@30 : 0.2882    mrr@40 : 0.2894    mrr@50 : 0.29    ndcg@10 : 0.1382    ndcg@20 : 0.1479    ndcg@30 : 0.1617    ndcg@40 : 0.1744    ndcg@50 : 0.1864    hit@10 : 0.5793    hit@20 : 0.7103    hit@30 : 0.7818    hit@40 : 0.8237    hit@50 : 0.8478    precision@10 : 0.1144    precision@20 : 0.0976    precision@30 : 0.0881    precision@40 : 0.0808    precision@50 : 0.0756    map@10 : 0.0659    map@20 : 0.0593    map@30 : 0.0596    map@40 : 0.0612    map@50 : 0.0631
+26 May 16:36    INFO  Train RS
+Train     9: 100%|██████████████████████████████████████████████| 1574/1574 [03:24<00:00,  7.68it/s]
+26 May 16:40    INFO  Train KG
+Train     9: 100%|████████████████████████████████████████████████| 377/377 [00:54<00:00,  6.87it/s]
+26 May 16:41    INFO  epoch 9 training [time: 259.86s, train_loss1: 613.5614, train_loss2: -385428.6152]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:41<00:00, 21.47it/s]
+26 May 16:45    INFO  epoch 9 evaluating [time: 281.45s, valid_score: 0.284600]
+26 May 16:45    INFO  valid result: 
+recall@10 : 0.0963    recall@20 : 0.1535    recall@30 : 0.2026    recall@40 : 0.2431    recall@50 : 0.281    mrr@10 : 0.2846    mrr@20 : 0.2935    mrr@30 : 0.296    mrr@40 : 0.2972    mrr@50 : 0.2978    ndcg@10 : 0.1447    ndcg@20 : 0.1537    ndcg@30 : 0.1674    ndcg@40 : 0.1801    ndcg@50 : 0.1927    hit@10 : 0.595    hit@20 : 0.7228    hit@30 : 0.7854    hit@40 : 0.8255    hit@50 : 0.8538    precision@10 : 0.1179    precision@20 : 0.0995    precision@30 : 0.0897    precision@40 : 0.0823    precision@50 : 0.0769    map@10 : 0.0697    map@20 : 0.0628    map@30 : 0.0634    map@40 : 0.0651    map@50 : 0.0671
+26 May 16:45    INFO  Train RS
+Train    10: 100%|██████████████████████████████████████████████| 1574/1574 [03:24<00:00,  7.70it/s]
+26 May 16:49    INFO  epoch 10 training [time: 204.49s, train_loss1: 607.1949, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:27<00:00, 22.55it/s]
+26 May 16:53    INFO  epoch 10 evaluating [time: 267.90s, valid_score: 0.296300]
+26 May 16:53    INFO  valid result: 
+recall@10 : 0.1    recall@20 : 0.1606    recall@30 : 0.2113    recall@40 : 0.2547    recall@50 : 0.2922    mrr@10 : 0.2963    mrr@20 : 0.3048    mrr@30 : 0.3073    mrr@40 : 0.3085    mrr@50 : 0.3091    ndcg@10 : 0.1514    ndcg@20 : 0.1606    ndcg@30 : 0.1746    ndcg@40 : 0.188    ndcg@50 : 0.2003    hit@10 : 0.6083    hit@20 : 0.7298    hit@30 : 0.7914    hit@40 : 0.8311    hit@50 : 0.8596    precision@10 : 0.1236    precision@20 : 0.1038    precision@30 : 0.0934    precision@40 : 0.0856    precision@50 : 0.0795    map@10 : 0.0736    map@20 : 0.0663    map@30 : 0.0668    map@40 : 0.0686    map@50 : 0.0706
+26 May 16:53    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 16:53    INFO  Train RS
+Train    11: 100%|██████████████████████████████████████████████| 1574/1574 [03:25<00:00,  7.65it/s]
+26 May 16:57    INFO  epoch 11 training [time: 205.75s, train_loss1: 595.9752, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:42<00:00, 21.41it/s]
+26 May 17:01    INFO  epoch 11 evaluating [time: 282.24s, valid_score: 0.292700]
+26 May 17:01    INFO  valid result: 
+recall@10 : 0.1015    recall@20 : 0.1664    recall@30 : 0.2185    recall@40 : 0.2635    recall@50 : 0.3022    mrr@10 : 0.2927    mrr@20 : 0.3018    mrr@30 : 0.3043    mrr@40 : 0.3054    mrr@50 : 0.306    ndcg@10 : 0.1507    ndcg@20 : 0.1628    ndcg@30 : 0.1772    ndcg@40 : 0.1912    ndcg@50 : 0.2039    hit@10 : 0.6123    hit@20 : 0.7427    hit@30 : 0.8043    hit@40 : 0.8434    hit@50 : 0.8699    precision@10 : 0.1239    precision@20 : 0.1063    precision@30 : 0.0954    precision@40 : 0.0875    precision@50 : 0.0812    map@10 : 0.0725    map@20 : 0.0665    map@30 : 0.0672    map@40 : 0.0692    map@50 : 0.0714
+26 May 17:01    INFO  Train RS
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:40<00:00, 21.57it/s]
+26 May 17:10    INFO  epoch 12 evaluating [time: 280.13s, valid_score: 0.302800]
+26 May 17:10    INFO  valid result: 
+recall@10 : 0.0999    recall@20 : 0.1658    recall@30 : 0.2194    recall@40 : 0.2656    recall@50 : 0.3064    mrr@10 : 0.3028    mrr@20 : 0.3116    mrr@30 : 0.3141    mrr@40 : 0.3153    mrr@50 : 0.3159    ndcg@10 : 0.1525    ndcg@20 : 0.1649    ndcg@30 : 0.1798    ndcg@40 : 0.1944    ndcg@50 : 0.2077    hit@10 : 0.6144    hit@20 : 0.7401    hit@30 : 0.8013    hit@40 : 0.8422    hit@50 : 0.871    precision@10 : 0.124    precision@20 : 0.1075    precision@30 : 0.0968    precision@40 : 0.089    precision@50 : 0.0828    map@10 : 0.0739    map@20 : 0.0679    map@30 : 0.0688    map@40 : 0.0709    map@50 : 0.0732
+26 May 17:10    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 17:10    INFO  Train RS
+Train    13: 100%|██████████████████████████████████████████████| 1574/1574 [03:24<00:00,  7.68it/s]
+26 May 17:14    INFO  epoch 13 training [time: 204.86s, train_loss1: 581.8636, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:29<00:00, 22.38it/s]
+26 May 17:18    INFO  epoch 13 evaluating [time: 269.96s, valid_score: 0.295600]
+26 May 17:18    INFO  valid result: 
+recall@10 : 0.1007    recall@20 : 0.1667    recall@30 : 0.2223    recall@40 : 0.2688    recall@50 : 0.3086    mrr@10 : 0.2956    mrr@20 : 0.3043    mrr@30 : 0.307    mrr@40 : 0.3081    mrr@50 : 0.3087    ndcg@10 : 0.152    ndcg@20 : 0.164    ndcg@30 : 0.1797    ndcg@40 : 0.1943    ndcg@50 : 0.2075    hit@10 : 0.6139    hit@20 : 0.7396    hit@30 : 0.807    hit@40 : 0.8444    hit@50 : 0.8702    precision@10 : 0.1264    precision@20 : 0.1086    precision@30 : 0.098    precision@40 : 0.0899    precision@50 : 0.0837    map@10 : 0.0729    map@20 : 0.0666    map@30 : 0.0676    map@40 : 0.0699    map@50 : 0.0723
+26 May 17:18    INFO  Train RS
+Train    14: 100%|██████████████████████████████████████████████| 1574/1574 [03:24<00:00,  7.70it/s]
+26 May 17:22    INFO  epoch 14 training [time: 204.36s, train_loss1: 574.8063, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:39<00:00, 21.65it/s]
+26 May 17:26    INFO  epoch 14 evaluating [time: 279.08s, valid_score: 0.309300]
+26 May 17:26    INFO  valid result: 
+recall@10 : 0.1042    recall@20 : 0.1744    recall@30 : 0.2282    recall@40 : 0.2754    recall@50 : 0.3165    mrr@10 : 0.3093    mrr@20 : 0.3183    mrr@30 : 0.3207    mrr@40 : 0.3218    mrr@50 : 0.3224    ndcg@10 : 0.1587    ndcg@20 : 0.1719    ndcg@30 : 0.1871    ndcg@40 : 0.202    ndcg@50 : 0.2155    hit@10 : 0.6268    hit@20 : 0.7538    hit@30 : 0.8132    hit@40 : 0.852    hit@50 : 0.8768    precision@10 : 0.1293    precision@20 : 0.1112    precision@30 : 0.1    precision@40 : 0.0916    precision@50 : 0.085    map@10 : 0.0778    map@20 : 0.0716    map@30 : 0.0726    map@40 : 0.0749    map@50 : 0.0774
+26 May 17:26    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 17:26    INFO  Train RS
+Train    15: 100%|██████████████████████████████████████████████| 1574/1574 [03:23<00:00,  7.73it/s]
+26 May 17:30    INFO  Train KG
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:40<00:00, 21.52it/s]
+26 May 17:35    INFO  epoch 15 evaluating [time: 280.79s, valid_score: 0.302900]
+26 May 17:35    INFO  valid result: 
+recall@10 : 0.1056    recall@20 : 0.1746    recall@30 : 0.2311    recall@40 : 0.2785    recall@50 : 0.3186    mrr@10 : 0.3029    mrr@20 : 0.3117    mrr@30 : 0.3141    mrr@40 : 0.3151    mrr@50 : 0.3157    ndcg@10 : 0.1586    ndcg@20 : 0.1716    ndcg@30 : 0.1872    ndcg@40 : 0.202    ndcg@50 : 0.2153    hit@10 : 0.6288    hit@20 : 0.7543    hit@30 : 0.8121    hit@40 : 0.8498    hit@50 : 0.8745    precision@10 : 0.1316    precision@20 : 0.1127    precision@30 : 0.1008    precision@40 : 0.092    precision@50 : 0.0856    map@10 : 0.0772    map@20 : 0.0712    map@30 : 0.0723    map@40 : 0.0746    map@50 : 0.077
+26 May 17:35    INFO  Train RS
+Train    16: 100%|██████████████████████████████████████████████| 1574/1574 [03:22<00:00,  7.77it/s]
+26 May 17:39    INFO  epoch 16 training [time: 202.49s, train_loss1: 564.0537, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:41<00:00, 21.48it/s]
+26 May 17:43    INFO  epoch 16 evaluating [time: 281.26s, valid_score: 0.301900]
+26 May 17:43    INFO  valid result: 
+recall@10 : 0.1083    recall@20 : 0.1798    recall@30 : 0.2343    recall@40 : 0.2818    recall@50 : 0.3238    mrr@10 : 0.3019    mrr@20 : 0.3102    mrr@30 : 0.3125    mrr@40 : 0.3135    mrr@50 : 0.3141    ndcg@10 : 0.1594    ndcg@20 : 0.1735    ndcg@30 : 0.1889    ndcg@40 : 0.2037    ndcg@50 : 0.2176    hit@10 : 0.6406    hit@20 : 0.7596    hit@30 : 0.8179    hit@40 : 0.8523    hit@50 : 0.8808    precision@10 : 0.1323    precision@20 : 0.1138    precision@30 : 0.1021    precision@40 : 0.0933    precision@50 : 0.0867    map@10 : 0.0774    map@20 : 0.0719    map@30 : 0.0731    map@40 : 0.0755    map@50 : 0.0781
+26 May 17:43    INFO  Train RS
+Train    17: 100%|██████████████████████████████████████████████| 1574/1574 [03:22<00:00,  7.77it/s]
+26 May 17:47    INFO  epoch 17 training [time: 202.59s, train_loss1: 556.0355, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:25<00:00, 22.78it/s]
+26 May 17:51    INFO  epoch 17 evaluating [time: 265.24s, valid_score: 0.312000]
+26 May 17:51    INFO  valid result: 
+recall@10 : 0.1085    recall@20 : 0.1812    recall@30 : 0.2365    recall@40 : 0.2836    recall@50 : 0.325    mrr@10 : 0.312    mrr@20 : 0.3206    mrr@30 : 0.3229    mrr@40 : 0.324    mrr@50 : 0.3245    ndcg@10 : 0.163    ndcg@20 : 0.177    ndcg@30 : 0.1924    ndcg@40 : 0.2069    ndcg@50 : 0.2207    hit@10 : 0.6379    hit@20 : 0.7609    hit@30 : 0.8172    hit@40 : 0.855    hit@50 : 0.8805    precision@10 : 0.1338    precision@20 : 0.1152    precision@30 : 0.103    precision@40 : 0.0939    precision@50 : 0.0873    map@10 : 0.0803    map@20 : 0.0743    map@30 : 0.0752    map@40 : 0.0774    map@50 : 0.08
+26 May 17:51    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 17:51    INFO  Train RS
+Train    18: 100%|██████████████████████████████████████████████| 1574/1574 [03:23<00:00,  7.72it/s]
+26 May 17:55    INFO  Train KG
+Train    18: 100%|████████████████████████████████████████████████| 377/377 [00:54<00:00,  6.98it/s]
+26 May 17:56    INFO  epoch 18 training [time: 257.96s, train_loss1: 552.1183, train_loss2: -385429.1168]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:45<00:00, 21.13it/s]
+26 May 18:00    INFO  epoch 18 evaluating [time: 285.96s, valid_score: 0.308800]
+26 May 18:00    INFO  valid result: 
+recall@10 : 0.1091    recall@20 : 0.1802    recall@30 : 0.2383    recall@40 : 0.2866    recall@50 : 0.3292    mrr@10 : 0.3088    mrr@20 : 0.3175    mrr@30 : 0.32    mrr@40 : 0.3211    mrr@50 : 0.3217    ndcg@10 : 0.1625    ndcg@20 : 0.1757    ndcg@30 : 0.1921    ndcg@40 : 0.2074    ndcg@50 : 0.2213    hit@10 : 0.6354    hit@20 : 0.7599    hit@30 : 0.8214    hit@40 : 0.8604    hit@50 : 0.8873    precision@10 : 0.1339    precision@20 : 0.1142    precision@30 : 0.1026    precision@40 : 0.0941    precision@50 : 0.0873    map@10 : 0.0801    map@20 : 0.0738    map@30 : 0.075    map@40 : 0.0774    map@50 : 0.08
+26 May 18:00    INFO  Train RS
+Train    19: 100%|██████████████████████████████████████████████| 1574/1574 [03:23<00:00,  7.72it/s]
+26 May 18:04    INFO  epoch 19 training [time: 203.82s, train_loss1: 547.0438, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:40<00:00, 21.55it/s]
+26 May 18:08    INFO  epoch 19 evaluating [time: 280.32s, valid_score: 0.306300]
+26 May 18:08    INFO  valid result: 
+recall@10 : 0.1088    recall@20 : 0.1802    recall@30 : 0.237    recall@40 : 0.2856    recall@50 : 0.3261    mrr@10 : 0.3063    mrr@20 : 0.315    mrr@30 : 0.3173    mrr@40 : 0.3184    mrr@50 : 0.3189    ndcg@10 : 0.1614    ndcg@20 : 0.1749    ndcg@30 : 0.1912    ndcg@40 : 0.2065    ndcg@50 : 0.22    hit@10 : 0.6407    hit@20 : 0.7624    hit@30 : 0.82    hit@40 : 0.8578    hit@50 : 0.8825    precision@10 : 0.1332    precision@20 : 0.114    precision@30 : 0.1026    precision@40 : 0.094    precision@50 : 0.0873    map@10 : 0.0788    map@20 : 0.0728    map@30 : 0.0741    map@40 : 0.0766    map@50 : 0.0792
+26 May 18:08    INFO  Train RS
+Train    20: 100%|██████████████████████████████████████████████| 1574/1574 [03:21<00:00,  7.82it/s]
+26 May 18:12    INFO  epoch 20 training [time: 201.17s, train_loss1: 541.7306, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:19<00:00, 23.31it/s]
+26 May 18:16    INFO  epoch 20 evaluating [time: 259.22s, valid_score: 0.307100]
+26 May 18:16    INFO  valid result: 
+recall@10 : 0.1101    recall@20 : 0.1855    recall@30 : 0.244    recall@40 : 0.2904    recall@50 : 0.3301    mrr@10 : 0.3071    mrr@20 : 0.3161    mrr@30 : 0.3183    mrr@40 : 0.3192    mrr@50 : 0.3197    ndcg@10 : 0.1626    ndcg@20 : 0.1782    ndcg@30 : 0.1949    ndcg@40 : 0.2095    ndcg@50 : 0.2229    hit@10 : 0.646    hit@20 : 0.7722    hit@30 : 0.8278    hit@40 : 0.8604    hit@50 : 0.8825    precision@10 : 0.1349    precision@20 : 0.1169    precision@30 : 0.105    precision@40 : 0.0956    precision@50 : 0.0887    map@10 : 0.0794    map@20 : 0.0742    map@30 : 0.0757    map@40 : 0.078    map@50 : 0.0806
+26 May 18:16    INFO  Train RS
+Train    21: 100%|██████████████████████████████████████████████| 1574/1574 [03:25<00:00,  7.65it/s]
+26 May 18:19    INFO  Train KG
+Train    21: 100%|████████████████████████████████████████████████| 377/377 [00:55<00:00,  6.83it/s]
+26 May 18:20    INFO  epoch 21 training [time: 260.96s, train_loss1: 535.6149, train_loss2: -385429.1921]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:42<00:00, 21.41it/s]
+26 May 18:25    INFO  epoch 21 evaluating [time: 282.25s, valid_score: 0.317100]
+26 May 18:25    INFO  valid result: 
+recall@10 : 0.1146    recall@20 : 0.1887    recall@30 : 0.2463    recall@40 : 0.2941    recall@50 : 0.3358    mrr@10 : 0.3171    mrr@20 : 0.3254    mrr@30 : 0.3277    mrr@40 : 0.3286    mrr@50 : 0.3292    ndcg@10 : 0.1679    ndcg@20 : 0.1822    ndcg@30 : 0.1984    ndcg@40 : 0.2134    ndcg@50 : 0.2272    hit@10 : 0.6599    hit@20 : 0.7768    hit@30 : 0.8329    hit@40 : 0.8656    hit@50 : 0.8894    precision@10 : 0.1383    precision@20 : 0.1187    precision@30 : 0.1061    precision@40 : 0.0967    precision@50 : 0.0895    map@10 : 0.0823    map@20 : 0.0765    map@30 : 0.0777    map@40 : 0.0802    map@50 : 0.0828
+26 May 18:25    INFO  Saving current: saved/MKR-May-26-2022_15-21-37.pth
+26 May 18:25    INFO  Train RS
+Train    22: 100%|██████████████████████████████████████████████| 1574/1574 [03:21<00:00,  7.80it/s]
+26 May 18:28    INFO  epoch 22 training [time: 201.83s, train_loss1: 533.1915, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:36<00:00, 21.84it/s]
+26 May 18:33    INFO  epoch 22 evaluating [time: 276.61s, valid_score: 0.311600]
+26 May 18:33    INFO  valid result: 
+recall@10 : 0.1122    recall@20 : 0.1881    recall@30 : 0.249    recall@40 : 0.2966    recall@50 : 0.338    mrr@10 : 0.3116    mrr@20 : 0.3204    mrr@30 : 0.3227    mrr@40 : 0.3236    mrr@50 : 0.3242    ndcg@10 : 0.1644    ndcg@20 : 0.18    ndcg@30 : 0.1972    ndcg@40 : 0.2124    ndcg@50 : 0.2262    hit@10 : 0.6485    hit@20 : 0.7745    hit@30 : 0.8328    hit@40 : 0.8656    hit@50 : 0.8906    precision@10 : 0.1363    precision@20 : 0.1182    precision@30 : 0.106    precision@40 : 0.097    precision@50 : 0.0898    map@10 : 0.0799    map@20 : 0.0748    map@30 : 0.0764    map@40 : 0.079    map@50 : 0.0816
+26 May 18:33    INFO  Train RS
+Train    23: 100%|██████████████████████████████████████████████| 1574/1574 [03:22<00:00,  7.76it/s]
+26 May 18:36    INFO  epoch 23 training [time: 202.80s, train_loss1: 528.5660, train_loss2: 0.0000]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:42<00:00, 21.39it/s]
+26 May 18:41    INFO  epoch 23 evaluating [time: 282.50s, valid_score: 0.314800]
+26 May 18:41    INFO  valid result: 
+recall@10 : 0.1149    recall@20 : 0.1905    recall@30 : 0.2491    recall@40 : 0.2974    recall@50 : 0.3386    mrr@10 : 0.3148    mrr@20 : 0.3238    mrr@30 : 0.3261    mrr@40 : 0.327    mrr@50 : 0.3276    ndcg@10 : 0.1662    ndcg@20 : 0.1824    ndcg@30 : 0.1991    ndcg@40 : 0.2145    ndcg@50 : 0.2282    hit@10 : 0.6518    hit@20 : 0.7801    hit@30 : 0.8358    hit@40 : 0.869    hit@50 : 0.8917    precision@10 : 0.1355    precision@20 : 0.118    precision@30 : 0.1056    precision@40 : 0.0967    precision@50 : 0.0896    map@10 : 0.0815    map@20 : 0.0765    map@30 : 0.078    map@40 : 0.0807    map@50 : 0.0834
+26 May 18:41    INFO  Train RS
+Train    24: 100%|██████████████████████████████████████████████| 1574/1574 [03:28<00:00,  7.54it/s]
+26 May 18:45    INFO  Train KG
+Train    24: 100%|████████████████████████████████████████████████| 377/377 [00:54<00:00,  6.88it/s]
+26 May 18:46    INFO  epoch 24 training [time: 263.60s, train_loss1: 523.0766, train_loss2: -385429.1508]
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:42<00:00, 21.40it/s]
+26 May 18:50    INFO  epoch 24 evaluating [time: 282.30s, valid_score: 0.311900]
+26 May 18:50    INFO  valid result: 
+recall@10 : 0.1143    recall@20 : 0.1891    recall@30 : 0.2476    recall@40 : 0.2986    recall@50 : 0.3381    mrr@10 : 0.3119    mrr@20 : 0.3208    mrr@30 : 0.3231    mrr@40 : 0.3241    mrr@50 : 0.3245    ndcg@10 : 0.1656    ndcg@20 : 0.1811    ndcg@30 : 0.1979    ndcg@40 : 0.2141    ndcg@50 : 0.2273    hit@10 : 0.6505    hit@20 : 0.7763    hit@30 : 0.8343    hit@40 : 0.8689    hit@50 : 0.8889    precision@10 : 0.1361    precision@20 : 0.1177    precision@30 : 0.1057    precision@40 : 0.0969    precision@50 : 0.0895    map@10 : 0.0812    map@20 : 0.0759    map@30 : 0.0774    map@40 : 0.0802    map@50 : 0.0828
+26 May 18:50    INFO  Loading model structure and parameters from saved/MKR-May-26-2022_15-21-37.pth
+Evaluate   : 100%|██████████████████████████████████████████████| 6040/6040 [04:44<00:00, 21.22it/s]
+26 May 18:55    INFO  best valid : OrderedDict([('recall@10', 0.1146), ('recall@20', 0.1887), ('recall@30', 0.2463), ('recall@40', 0.2941), ('recall@50', 0.3358), ('mrr@10', 0.3171), ('mrr@20', 0.3254), ('mrr@30', 0.3277), ('mrr@40', 0.3286), ('mrr@50', 0.3292), ('ndcg@10', 0.1679), ('ndcg@20', 0.1822), ('ndcg@30', 0.1984), ('ndcg@40', 0.2134), ('ndcg@50', 0.2272), ('hit@10', 0.6599), ('hit@20', 0.7768), ('hit@30', 0.8329), ('hit@40', 0.8656), ('hit@50', 0.8894), ('precision@10', 0.1383), ('precision@20', 0.1187), ('precision@30', 0.1061), ('precision@40', 0.0967), ('precision@50', 0.0895), ('map@10', 0.0823), ('map@20', 0.0765), ('map@30', 0.0777), ('map@40', 0.0802), ('map@50', 0.0828)])
+26 May 18:55    INFO  test result: OrderedDict([('recall@10', 0.1288), ('recall@20', 0.2034), ('recall@30', 0.2579), ('recall@40', 0.3072), ('recall@50', 0.3499), ('mrr@10', 0.3744), ('mrr@20', 0.3821), ('mrr@30', 0.384), ('mrr@40', 0.3849), ('mrr@50', 0.3855), ('ndcg@10', 0.2105), ('ndcg@20', 0.216), ('ndcg@30', 0.2272), ('ndcg@40', 0.2406), ('ndcg@50', 0.2534), ('hit@10', 0.676), ('hit@20', 0.7833), ('hit@30', 0.8318), ('hit@40', 0.8634), ('hit@50', 0.8874), ('precision@10', 0.173), ('precision@20', 0.141), ('precision@30', 0.1225), ('precision@40', 0.1102), ('precision@50', 0.1008), ('map@10', 0.119), ('map@20', 0.1043), ('map@30', 0.1012), ('map@40', 0.1017), ('map@50', 0.1033)])
+Show less
+{'best_valid_score': 0.3171,
+ 'valid_score_bigger': True,
+ 'best_valid_result': OrderedDict([('recall@10', 0.1146),
+              ('recall@20', 0.1887),
+              ('recall@30', 0.2463),
+              ('recall@40', 0.2941),
+              ('recall@50', 0.3358),
+              ('mrr@10', 0.3171),
+              ('mrr@20', 0.3254),
+              ('mrr@30', 0.3277),
+              ('mrr@40', 0.3286),
+              ('mrr@50', 0.3292),
+              ('ndcg@10', 0.1679),
+              ('ndcg@20', 0.1822),
+              ('ndcg@30', 0.1984),
+              ('ndcg@40', 0.2134),
+              ('ndcg@50', 0.2272),
+              ('hit@10', 0.6599),
+              ('hit@20', 0.7768),
+              ('hit@30', 0.8329),
+              ('hit@40', 0.8656),
+              ('hit@50', 0.8894),
+              ('precision@10', 0.1383),
+              ('precision@20', 0.1187),
+              ('precision@30', 0.1061),
+              ('precision@40', 0.0967),
+              ('precision@50', 0.0895),
+              ('map@10', 0.0823),
+              ('map@20', 0.0765),
+              ('map@30', 0.0777),
+              ('map@40', 0.0802),
+              ('map@50', 0.0828)]),
+ 'test_result': OrderedDict([('recall@10', 0.1288),
+              ('recall@20', 0.2034),
+              ('recall@30', 0.2579),
+              ('recall@40', 0.3072),
+              ('recall@50', 0.3499),
+              ('mrr@10', 0.3744),
+              ('mrr@20', 0.3821),
+              ('mrr@30', 0.384),
+              ('mrr@40', 0.3849),
+              ('mrr@50', 0.3855),
+              ('ndcg@10', 0.2105),
+              ('ndcg@20', 0.216),
+              ('ndcg@30', 0.2272),
+              ('ndcg@40', 0.2406),
+              ('ndcg@50', 0.2534),
+              ('hit@10', 0.676),
+              ('hit@20', 0.7833),
+              ('hit@30', 0.8318),
+              ('hit@40', 0.8634),
+              ('hit@50', 0.8874),
+              ('precision@10', 0.173),
+              ('precision@20', 0.141),
+              ('precision@30', 0.1225),
+              ('precision@40', 0.1102),
+              ('precision@50', 0.1008),
+              ('map@10', 0.119),
+              ('map@20', 0.1043),
+              ('map@30', 0.1012),
+              ('map@40', 0.1017),
+              ('map@50', 0.1033)])}

@@ -1,0 +1,238 @@
+28 May 13:05    INFO  
+General Hyper Parameters:
+gpu_id = 0
+use_gpu = True
+seed = 2020
+state = INFO
+reproducibility = True
+data_path = dataset/ml-1m-1h
+checkpoint_dir = saved
+show_progress = True
+save_dataset = False
+dataset_save_path = None
+save_dataloaders = False
+dataloaders_save_path = None
+log_wandb = False
+
+Training Hyper Parameters:
+epochs = 10
+train_batch_size = 1024
+learner = adam
+learning_rate = 0.001
+neg_sampling = {'uniform': 1}
+eval_step = 1
+stopping_step = 10
+clip_grad_norm = None
+weight_decay = 0.0
+loss_decimal_place = 4
+
+Evaluation Hyper Parameters:
+eval_args = {'group_by': 'user', 'order': 'RO', 'split': {'RS': [6, 2, 2]}, 'mode': 'full'}
+repeatable = False
+metrics = ['Recall', 'MRR', 'NDCG', 'Hit', 'Precision', 'MAP']
+topk = [10, 20, 30, 40, 50]
+valid_metric = MRR@10
+valid_metric_bigger = True
+eval_batch_size = 2048
+metric_decimal_place = 4
+
+Dataset Hyper Parameters:
+field_separator = 	
+seq_separator =  
+USER_ID_FIELD = user_id
+ITEM_ID_FIELD = item_id
+RATING_FIELD = rating
+TIME_FIELD = timestamp
+seq_len = None
+LABEL_FIELD = label
+threshold = None
+NEG_PREFIX = neg_
+load_col = {'inter': ['user_id', 'item_id']}
+unload_col = None
+unused_col = None
+additional_feat_suffix = None
+rm_dup_inter = None
+val_interval = None
+filter_inter_by_user_or_item = True
+user_inter_num_interval = [0,inf)
+item_inter_num_interval = [0,inf)
+alias_of_user_id = None
+alias_of_item_id = None
+alias_of_entity_id = None
+alias_of_relation_id = None
+preload_weight = None
+normalize_field = None
+normalize_all = None
+ITEM_LIST_LENGTH_FIELD = item_length
+LIST_SUFFIX = _list
+MAX_ITEM_LIST_LENGTH = 50
+POSITION_FIELD = position_id
+HEAD_ENTITY_ID_FIELD = head_id
+TAIL_ENTITY_ID_FIELD = tail_id
+RELATION_ID_FIELD = relation_id
+ENTITY_ID_FIELD = entity_id
+benchmark_filename = None
+
+Other Hyper Parameters: 
+wandb_project = recbole
+require_pow = False
+embedding_size = 64
+MODEL_TYPE = ModelType.GENERAL
+MODEL_INPUT_TYPE = InputType.PAIRWISE
+eval_type = EvaluatorType.RANKING
+device = cpu
+train_neg_sample_args = {'strategy': 'by', 'by': 1, 'distribution': 'uniform', 'dynamic': 'none'}
+eval_neg_sample_args = {'strategy': 'full', 'distribution': 'uniform'}
+
+
+28 May 13:05    INFO  ml-1m-1h
+The number of users: 6041
+Average actions of users: 165.5975165562914
+The number of items: 3707
+Average actions of items: 269.88909875876953
+The number of inters: 1000209
+The sparsity of the dataset: 95.53358229599758%
+Remain Fields: ['user_id', 'item_id']
+28 May 13:05    INFO  [Training]: train_batch_size = [1024] negative sampling: [{'uniform': 1}]
+28 May 13:05    INFO  [Evaluation]: eval_batch_size = [2048] eval_args: [{'group_by': 'user', 'order': 'RO', 'split': {'RS': [6, 2, 2]}, 'mode': 'full'}]
+28 May 13:05    INFO  BPR(
+  (user_embedding): Embedding(6041, 64)
+  (item_embedding): Embedding(3707, 64)
+  (loss): BPRLoss()
+)
+Trainable parameters: 623872
+Train     0: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 166.29it/s]
+28 May 13:05    INFO  epoch 0 training [time: 3.58s, train loss: 345.3013]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3613.10it/s]
+28 May 13:06    INFO  epoch 0 evaluating [time: 1.76s, valid_score: 0.318900]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.0608    recall@20 : 0.1049    recall@30 : 0.1385    recall@40 : 0.1641    recall@50 : 0.1876    mrr@10 : 0.3189    mrr@20 : 0.3281    mrr@30 : 0.3304    mrr@40 : 0.3313    mrr@50 : 0.3317    ndcg@10 : 0.1591    ndcg@20 : 0.1583    ndcg@30 : 0.1616    ndcg@40 : 0.1657    ndcg@50 : 0.1714    hit@10 : 0.6561    hit@20 : 0.7846    hit@30 : 0.8417    hit@40 : 0.8732    hit@50 : 0.8932    precision@10 : 0.1467    precision@20 : 0.1285    precision@30 : 0.115    precision@40 : 0.1046    precision@50 : 0.0973    map@10 : 0.0762    map@20 : 0.0619    map@30 : 0.0571    map@40 : 0.055    map@50 : 0.0544
+28 May 13:06    INFO  Saving current: saved/BPR-May-28-2022_13-05-55.pth
+Train     1: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 167.53it/s]
+28 May 13:06    INFO  epoch 1 training [time: 3.55s, train loss: 211.5229]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3578.37it/s]
+28 May 13:06    INFO  epoch 1 evaluating [time: 1.77s, valid_score: 0.339600]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.0639    recall@20 : 0.1083    recall@30 : 0.1442    recall@40 : 0.1737    recall@50 : 0.1981    mrr@10 : 0.3396    mrr@20 : 0.3481    mrr@30 : 0.3506    mrr@40 : 0.3515    mrr@50 : 0.3519    ndcg@10 : 0.168    ndcg@20 : 0.1662    ndcg@30 : 0.17    ndcg@40 : 0.176    ndcg@50 : 0.1823    hit@10 : 0.6725    hit@20 : 0.7916    hit@30 : 0.8536    hit@40 : 0.8869    hit@50 : 0.9048    precision@10 : 0.1524    precision@20 : 0.1333    precision@30 : 0.1199    precision@40 : 0.1108    precision@50 : 0.1038    map@10 : 0.0817    map@20 : 0.0661    map@30 : 0.0611    map@40 : 0.0595    map@50 : 0.0592
+28 May 13:06    INFO  Saving current: saved/BPR-May-28-2022_13-05-55.pth
+Train     2: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 170.89it/s]
+28 May 13:06    INFO  epoch 2 training [time: 3.48s, train loss: 190.0818]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3681.24it/s]
+28 May 13:06    INFO  epoch 2 evaluating [time: 1.72s, valid_score: 0.362400]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.0703    recall@20 : 0.1181    recall@30 : 0.1557    recall@40 : 0.189    recall@50 : 0.2189    mrr@10 : 0.3624    mrr@20 : 0.3702    mrr@30 : 0.3725    mrr@40 : 0.3735    mrr@50 : 0.3739    ndcg@10 : 0.1843    ndcg@20 : 0.1806    ndcg@30 : 0.1844    ndcg@40 : 0.1918    ndcg@50 : 0.1999    hit@10 : 0.7036    hit@20 : 0.8141    hit@30 : 0.8714    hit@40 : 0.9048    hit@50 : 0.9237    precision@10 : 0.1679    precision@20 : 0.1448    precision@30 : 0.1307    precision@40 : 0.1215    precision@50 : 0.1146    map@10 : 0.0915    map@20 : 0.0736    map@30 : 0.0682    map@40 : 0.0667    map@50 : 0.0667
+28 May 13:06    INFO  Saving current: saved/BPR-May-28-2022_13-05-55.pth
+Train     3: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 170.64it/s]
+28 May 13:06    INFO  epoch 3 training [time: 3.48s, train loss: 174.0241]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3537.38it/s]
+28 May 13:06    INFO  epoch 3 evaluating [time: 1.79s, valid_score: 0.378300]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.0777    recall@20 : 0.1276    recall@30 : 0.1689    recall@40 : 0.2048    recall@50 : 0.2367    mrr@10 : 0.3783    mrr@20 : 0.3857    mrr@30 : 0.388    mrr@40 : 0.3887    mrr@50 : 0.3892    ndcg@10 : 0.1988    ndcg@20 : 0.1943    ndcg@30 : 0.1988    ndcg@40 : 0.2067    ndcg@50 : 0.2153    hit@10 : 0.7288    hit@20 : 0.8323    hit@30 : 0.8881    hit@40 : 0.9146    hit@50 : 0.9341    precision@10 : 0.1821    precision@20 : 0.1562    precision@30 : 0.1408    precision@40 : 0.1308    precision@50 : 0.1225    map@10 : 0.1002    map@20 : 0.0813    map@30 : 0.0756    map@40 : 0.0741    map@50 : 0.0741
+28 May 13:06    INFO  Saving current: saved/BPR-May-28-2022_13-05-55.pth
+Train     4: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 166.77it/s]
+28 May 13:06    INFO  epoch 4 training [time: 3.57s, train loss: 162.9858]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3575.24it/s]
+28 May 13:06    INFO  epoch 4 evaluating [time: 1.78s, valid_score: 0.409400]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.0837    recall@20 : 0.137    recall@30 : 0.1794    recall@40 : 0.2168    recall@50 : 0.2489    mrr@10 : 0.4094    mrr@20 : 0.4164    mrr@30 : 0.4182    mrr@40 : 0.419    mrr@50 : 0.4193    ndcg@10 : 0.2111    ndcg@20 : 0.2072    ndcg@30 : 0.2118    ndcg@40 : 0.22    ndcg@50 : 0.2288    hit@10 : 0.7566    hit@20 : 0.856    hit@30 : 0.9017    hit@40 : 0.9273    hit@50 : 0.9437    precision@10 : 0.1905    precision@20 : 0.1645    precision@30 : 0.1479    precision@40 : 0.1368    precision@50 : 0.1281    map@10 : 0.1071    map@20 : 0.0878    map@30 : 0.082    map@40 : 0.0807    map@50 : 0.0809
+28 May 13:06    INFO  Saving current: saved/BPR-May-28-2022_13-05-55.pth
+Train     5: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 168.52it/s]
+28 May 13:06    INFO  epoch 5 training [time: 3.53s, train loss: 154.1626]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3612.60it/s]
+28 May 13:06    INFO  epoch 5 evaluating [time: 1.76s, valid_score: 0.412200]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.086    recall@20 : 0.1416    recall@30 : 0.1873    recall@40 : 0.2261    recall@50 : 0.2591    mrr@10 : 0.4122    mrr@20 : 0.4191    mrr@30 : 0.4211    mrr@40 : 0.4217    mrr@50 : 0.4221    ndcg@10 : 0.2157    ndcg@20 : 0.2132    ndcg@30 : 0.2192    ndcg@40 : 0.2278    ndcg@50 : 0.2369    hit@10 : 0.7604    hit@20 : 0.857    hit@30 : 0.9056    hit@40 : 0.9288    hit@50 : 0.9452    precision@10 : 0.1956    precision@20 : 0.1701    precision@30 : 0.1536    precision@40 : 0.1418    precision@50 : 0.1326    map@10 : 0.1105    map@20 : 0.0914    map@30 : 0.0861    map@40 : 0.0848    map@50 : 0.0852
+28 May 13:06    INFO  Saving current: saved/BPR-May-28-2022_13-05-55.pth
+Train     6: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 162.11it/s]
+28 May 13:06    INFO  epoch 6 training [time: 3.67s, train loss: 147.2347]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3553.37it/s]
+28 May 13:06    INFO  epoch 6 evaluating [time: 1.78s, valid_score: 0.422300]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.0888    recall@20 : 0.1472    recall@30 : 0.1939    recall@40 : 0.2329    recall@50 : 0.2671    mrr@10 : 0.4223    mrr@20 : 0.4289    mrr@30 : 0.4306    mrr@40 : 0.4312    mrr@50 : 0.4315    ndcg@10 : 0.2213    ndcg@20 : 0.2193    ndcg@30 : 0.2257    ndcg@40 : 0.2345    ndcg@50 : 0.244    hit@10 : 0.7755    hit@20 : 0.8705    hit@30 : 0.9129    hit@40 : 0.9333    hit@50 : 0.9478    precision@10 : 0.2002    precision@20 : 0.1743    precision@30 : 0.1578    precision@40 : 0.1456    precision@50 : 0.1362    map@10 : 0.1135    map@20 : 0.0943    map@30 : 0.0892    map@40 : 0.0882    map@50 : 0.0886
+28 May 13:06    INFO  Saving current: saved/BPR-May-28-2022_13-05-55.pth
+Train     7: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 172.49it/s]
+28 May 13:06    INFO  epoch 7 training [time: 3.45s, train loss: 142.5992]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3580.79it/s]
+28 May 13:06    INFO  epoch 7 evaluating [time: 1.77s, valid_score: 0.422200]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.0912    recall@20 : 0.1521    recall@30 : 0.1988    recall@40 : 0.2388    recall@50 : 0.2746    mrr@10 : 0.4222    mrr@20 : 0.4291    mrr@30 : 0.4305    mrr@40 : 0.4312    mrr@50 : 0.4315    ndcg@10 : 0.2244    ndcg@20 : 0.2233    ndcg@30 : 0.2295    ndcg@40 : 0.2389    ndcg@50 : 0.2488    hit@10 : 0.7805    hit@20 : 0.8778    hit@30 : 0.9141    hit@40 : 0.9363    hit@50 : 0.9513    precision@10 : 0.2043    precision@20 : 0.1783    precision@30 : 0.1608    precision@40 : 0.1487    precision@50 : 0.139    map@10 : 0.1155    map@20 : 0.0964    map@30 : 0.0913    map@40 : 0.0904    map@50 : 0.0909
+Train     8: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 169.53it/s]
+28 May 13:06    INFO  epoch 8 training [time: 3.51s, train loss: 137.0674]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3459.30it/s]
+28 May 13:06    INFO  epoch 8 evaluating [time: 1.82s, valid_score: 0.428900]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.0938    recall@20 : 0.1561    recall@30 : 0.2058    recall@40 : 0.2468    recall@50 : 0.2824    mrr@10 : 0.4289    mrr@20 : 0.4351    mrr@30 : 0.4367    mrr@40 : 0.4373    mrr@50 : 0.4376    ndcg@10 : 0.2285    ndcg@20 : 0.228    ndcg@30 : 0.2354    ndcg@40 : 0.2448    ndcg@50 : 0.2549    hit@10 : 0.7922    hit@20 : 0.8818    hit@30 : 0.921    hit@40 : 0.9421    hit@50 : 0.9561    precision@10 : 0.2076    precision@20 : 0.1816    precision@30 : 0.1644    precision@40 : 0.1514    precision@50 : 0.1416    map@10 : 0.1178    map@20 : 0.099    map@30 : 0.0942    map@40 : 0.0932    map@50 : 0.094
+28 May 13:06    INFO  Saving current: saved/BPR-May-28-2022_13-05-55.pth
+Train     9: 100%|███████████████████████████████████████████████| 591/591 [00:03<00:00, 170.41it/s]
+28 May 13:06    INFO  epoch 9 training [time: 3.49s, train loss: 133.7243]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3542.02it/s]
+28 May 13:06    INFO  epoch 9 evaluating [time: 1.78s, valid_score: 0.442300]
+28 May 13:06    INFO  valid result: 
+recall@10 : 0.0971    recall@20 : 0.1586    recall@30 : 0.208    recall@40 : 0.2507    recall@50 : 0.287    mrr@10 : 0.4423    mrr@20 : 0.4485    mrr@30 : 0.45    mrr@40 : 0.4506    mrr@50 : 0.4509    ndcg@10 : 0.2352    ndcg@20 : 0.2331    ndcg@30 : 0.2403    ndcg@40 : 0.2505    ndcg@50 : 0.2609    hit@10 : 0.7967    hit@20 : 0.8841    hit@30 : 0.9207    hit@40 : 0.9417    hit@50 : 0.9548    precision@10 : 0.2124    precision@20 : 0.1835    precision@30 : 0.166    precision@40 : 0.1535    precision@50 : 0.1435    map@10 : 0.1222    map@20 : 0.1024    map@30 : 0.0975    map@40 : 0.0969    map@50 : 0.0978
+28 May 13:06    INFO  Saving current: saved/BPR-May-28-2022_13-05-55.pth
+28 May 13:06    INFO  Loading model structure and parameters from saved/BPR-May-28-2022_13-05-55.pth
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3597.00it/s]
+28 May 13:06    INFO  best valid : OrderedDict([('recall@10', 0.0971), ('recall@20', 0.1586), ('recall@30', 0.208), ('recall@40', 0.2507), ('recall@50', 0.287), ('mrr@10', 0.4423), ('mrr@20', 0.4485), ('mrr@30', 0.45), ('mrr@40', 0.4506), ('mrr@50', 0.4509), ('ndcg@10', 0.2352), ('ndcg@20', 0.2331), ('ndcg@30', 0.2403), ('ndcg@40', 0.2505), ('ndcg@50', 0.2609), ('hit@10', 0.7967), ('hit@20', 0.8841), ('hit@30', 0.9207), ('hit@40', 0.9417), ('hit@50', 0.9548), ('precision@10', 0.2124), ('precision@20', 0.1835), ('precision@30', 0.166), ('precision@40', 0.1535), ('precision@50', 0.1435), ('map@10', 0.1222), ('map@20', 0.1024), ('map@30', 0.0975), ('map@40', 0.0969), ('map@50', 0.0978)])
+28 May 13:06    INFO  test result: OrderedDict([('recall@10', 0.1138), ('recall@20', 0.1797), ('recall@30', 0.2309), ('recall@40', 0.2744), ('recall@50', 0.3127), ('mrr@10', 0.5392), ('mrr@20', 0.5447), ('mrr@30', 0.5461), ('mrr@40', 0.5467), ('mrr@50', 0.547), ('ndcg@10', 0.3191), ('ndcg@20', 0.3002), ('ndcg@30', 0.2992), ('ndcg@40', 0.3044), ('ndcg@50', 0.312), ('hit@10', 0.8134), ('hit@20', 0.8914), ('hit@30', 0.9262), ('hit@40', 0.9457), ('hit@50', 0.9593), ('precision@10', 0.2835), ('precision@20', 0.2352), ('precision@30', 0.2076), ('precision@40', 0.1884), ('precision@50', 0.1739), ('map@10', 0.2045), ('map@20', 0.1647), ('map@30', 0.1504), ('map@40', 0.1443), ('map@50', 0.1417)])
+{'best_valid_score': 0.4423,
+ 'valid_score_bigger': True,
+ 'best_valid_result': OrderedDict([('recall@10', 0.0971),
+              ('recall@20', 0.1586),
+              ('recall@30', 0.208),
+              ('recall@40', 0.2507),
+              ('recall@50', 0.287),
+              ('mrr@10', 0.4423),
+              ('mrr@20', 0.4485),
+              ('mrr@30', 0.45),
+              ('mrr@40', 0.4506),
+              ('mrr@50', 0.4509),
+              ('ndcg@10', 0.2352),
+              ('ndcg@20', 0.2331),
+              ('ndcg@30', 0.2403),
+              ('ndcg@40', 0.2505),
+              ('ndcg@50', 0.2609),
+              ('hit@10', 0.7967),
+              ('hit@20', 0.8841),
+              ('hit@30', 0.9207),
+              ('hit@40', 0.9417),
+              ('hit@50', 0.9548),
+              ('precision@10', 0.2124),
+              ('precision@20', 0.1835),
+              ('precision@30', 0.166),
+              ('precision@40', 0.1535),
+              ('precision@50', 0.1435),
+              ('map@10', 0.1222),
+              ('map@20', 0.1024),
+              ('map@30', 0.0975),
+              ('map@40', 0.0969),
+              ('map@50', 0.0978)]),
+ 'test_result': OrderedDict([('recall@10', 0.1138),
+              ('recall@20', 0.1797),
+              ('recall@30', 0.2309),
+              ('recall@40', 0.2744),
+              ('recall@50', 0.3127),
+              ('mrr@10', 0.5392),
+              ('mrr@20', 0.5447),
+              ('mrr@30', 0.5461),
+              ('mrr@40', 0.5467),
+              ('mrr@50', 0.547),
+              ('ndcg@10', 0.3191),
+              ('ndcg@20', 0.3002),
+              ('ndcg@30', 0.2992),
+              ('ndcg@40', 0.3044),
+              ('ndcg@50', 0.312),
+              ('hit@10', 0.8134),
+              ('hit@20', 0.8914),
+              ('hit@30', 0.9262),
+              ('hit@40', 0.9457),
+              ('hit@50', 0.9593),
+              ('precision@10', 0.2835),
+              ('precision@20', 0.2352),
+              ('precision@30', 0.2076),
+              ('precision@40', 0.1884),
+              ('precision@50', 0.1739),
+              ('map@10', 0.2045),
+              ('map@20', 0.1647),
+              ('map@30', 0.1504),
+              ('map@40', 0.1443),
+              ('map@50', 0.1417)])}

@@ -1,0 +1,272 @@
+26 May 22:26    INFO  
+General Hyper Parameters:
+gpu_id = 0
+use_gpu = True
+seed = 2020
+state = INFO
+reproducibility = True
+data_path = dataset/ml-1m-1h
+checkpoint_dir = saved
+show_progress = True
+save_dataset = False
+dataset_save_path = None
+save_dataloaders = False
+dataloaders_save_path = None
+log_wandb = False
+
+Training Hyper Parameters:
+epochs = 10
+train_batch_size = 1024
+learner = adam
+learning_rate = 0.001
+neg_sampling = {'uniform': 1}
+eval_step = 1
+stopping_step = 10
+clip_grad_norm = None
+weight_decay = 0.0
+loss_decimal_place = 4
+
+Evaluation Hyper Parameters:
+eval_args = {'group_by': 'user', 'order': 'RO', 'split': {'RS': [6, 2, 2]}, 'mode': 'full'}
+repeatable = False
+metrics = ['Recall', 'MRR', 'NDCG', 'Hit', 'Precision', 'MAP']
+topk = [10, 20, 30, 40, 50]
+valid_metric = MRR@10
+valid_metric_bigger = True
+eval_batch_size = 2048
+metric_decimal_place = 4
+
+Dataset Hyper Parameters:
+field_separator = 	
+seq_separator =  
+USER_ID_FIELD = user_id
+ITEM_ID_FIELD = item_id
+RATING_FIELD = rating
+TIME_FIELD = timestamp
+seq_len = None
+LABEL_FIELD = label
+threshold = None
+NEG_PREFIX = neg_
+load_col = {'inter': ['user_id', 'item_id', 'rating', 'timestamp'], 'kg': ['head_id', 'relation_id', 'tail_id'], 'link': ['item_id', 'entity_id']}
+unload_col = None
+unused_col = None
+additional_feat_suffix = None
+rm_dup_inter = None
+val_interval = None
+filter_inter_by_user_or_item = True
+user_inter_num_interval = [0,inf)
+item_inter_num_interval = [0,inf)
+alias_of_user_id = None
+alias_of_item_id = None
+alias_of_entity_id = None
+alias_of_relation_id = None
+preload_weight = None
+normalize_field = None
+normalize_all = None
+ITEM_LIST_LENGTH_FIELD = item_length
+LIST_SUFFIX = _list
+MAX_ITEM_LIST_LENGTH = 50
+POSITION_FIELD = position_id
+HEAD_ENTITY_ID_FIELD = head_id
+TAIL_ENTITY_ID_FIELD = tail_id
+RELATION_ID_FIELD = relation_id
+ENTITY_ID_FIELD = entity_id
+benchmark_filename = None
+
+Other Hyper Parameters: 
+wandb_project = recbole
+require_pow = False
+embedding_size = 64
+kg_embedding_size = 64
+layers = [64]
+mess_dropout = 0.1
+reg_weight = 1e-05
+aggregator_type = bi
+MODEL_TYPE = ModelType.KNOWLEDGE
+MODEL_INPUT_TYPE = InputType.PAIRWISE
+eval_type = EvaluatorType.RANKING
+device = cpu
+train_neg_sample_args = {'strategy': 'by', 'by': 1, 'distribution': 'uniform', 'dynamic': 'none'}
+eval_neg_sample_args = {'strategy': 'full', 'distribution': 'uniform'}
+
+
+26 May 22:26    INFO  ml-1m-1h
+The number of users: 6041
+Average actions of users: 165.5975165562914
+The number of items: 3707
+Average actions of items: 269.88909875876953
+The number of inters: 1000209
+The sparsity of the dataset: 95.53358229599758%
+Remain Fields: ['entity_id', 'user_id', 'item_id', 'rating', 'timestamp', 'head_id', 'relation_id', 'tail_id']
+The number of entities: 79399
+The number of relations: 51
+The number of triples: 385923
+The number of items that have been linked to KG: 3655
+26 May 22:26    INFO  [Training]: train_batch_size = [1024] negative sampling: [{'uniform': 1}]
+26 May 22:26    INFO  [Evaluation]: eval_batch_size = [2048] eval_args: [{'group_by': 'user', 'order': 'RO', 'split': {'RS': [6, 2, 2]}, 'mode': 'full'}]
+/anaconda/envs/azureml_py38/lib/python3.8/site-packages/recbole/model/knowledge_aware_recommender/kgat.py:134: RuntimeWarning: divide by zero encountered in power
+  d_inv = np.power(rowsum, -1).flatten()
+26 May 22:26    INFO  KGAT(
+  (user_embedding): Embedding(6041, 64)
+  (entity_embedding): Embedding(79399, 64)
+  (relation_embedding): Embedding(51, 64)
+  (trans_w): Embedding(51, 4096)
+  (aggregator_layers): ModuleList(
+    (0): Aggregator(
+      (message_dropout): Dropout(p=0.1, inplace=False)
+      (W1): Linear(in_features=64, out_features=64, bias=True)
+      (W2): Linear(in_features=64, out_features=64, bias=True)
+      (activation): LeakyReLU(negative_slope=0.01)
+    )
+  )
+  (tanh): Tanh()
+  (mf_loss): BPRLoss()
+  (reg_loss): EmbLoss()
+)
+Trainable parameters: 5688640
+Train     0: 100%|████████████████████████████████████████████████| 591/591 [03:49<00:00,  2.57it/s]
+Train     0: 100%|████████████████████████████████████████████████| 377/377 [00:17<00:00, 21.94it/s]
+26 May 22:30    INFO  epoch 0 training [time: 247.82s, train_loss1: 274.7815, train_loss2: 118.6426]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3304.47it/s]
+26 May 22:30    INFO  epoch 0 evaluating [time: 1.89s, valid_score: 0.143300]
+26 May 22:30    INFO  valid result: 
+recall@10 : 0.0215    recall@20 : 0.0377    recall@30 : 0.0546    recall@40 : 0.0722    recall@50 : 0.0891    mrr@10 : 0.1433    mrr@20 : 0.1536    mrr@30 : 0.1576    mrr@40 : 0.1595    mrr@50 : 0.1606    ndcg@10 : 0.0615    ndcg@20 : 0.0628    ndcg@30 : 0.0672    ndcg@40 : 0.073    ndcg@50 : 0.0789    hit@10 : 0.3748    hit@20 : 0.5255    hit@30 : 0.623    hit@40 : 0.6904    hit@50 : 0.7401    precision@10 : 0.0578    precision@20 : 0.054    precision@30 : 0.053    precision@40 : 0.0529    precision@50 : 0.0525    map@10 : 0.024    map@20 : 0.0188    map@30 : 0.0174    map@40 : 0.0173    map@50 : 0.0175
+26 May 22:30    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+Train     1: 100%|████████████████████████████████████████████████| 591/591 [03:39<00:00,  2.69it/s]
+Train     1: 100%|████████████████████████████████████████████████| 377/377 [00:17<00:00, 21.93it/s]
+26 May 22:34    INFO  epoch 1 training [time: 237.65s, train_loss1: 254.8998, train_loss2: 59.2465]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3345.19it/s]
+26 May 22:34    INFO  epoch 1 evaluating [time: 1.88s, valid_score: 0.294400]
+26 May 22:34    INFO  valid result: 
+recall@10 : 0.0569    recall@20 : 0.0967    recall@30 : 0.1314    recall@40 : 0.1605    recall@50 : 0.1848    mrr@10 : 0.2944    mrr@20 : 0.3035    mrr@30 : 0.3061    mrr@40 : 0.3071    mrr@50 : 0.3076    ndcg@10 : 0.1475    ndcg@20 : 0.1468    ndcg@30 : 0.1521    ndcg@40 : 0.1588    ndcg@50 : 0.1653    hit@10 : 0.6421    hit@20 : 0.771    hit@30 : 0.8343    hit@40 : 0.8697    hit@50 : 0.8916    precision@10 : 0.1369    precision@20 : 0.1209    precision@30 : 0.1114    precision@40 : 0.1039    precision@50 : 0.0976    map@10 : 0.0688    map@20 : 0.0553    map@30 : 0.0515    map@40 : 0.0503    map@50 : 0.0501
+26 May 22:34    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+Train     2: 100%|████████████████████████████████████████████████| 591/591 [03:39<00:00,  2.70it/s]
+Train     2: 100%|████████████████████████████████████████████████| 377/377 [00:17<00:00, 21.90it/s]
+26 May 22:38    INFO  epoch 2 training [time: 236.99s, train_loss1: 223.9112, train_loss2: 43.8032]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3258.02it/s]
+26 May 22:38    INFO  epoch 2 evaluating [time: 1.93s, valid_score: 0.353300]
+26 May 22:38    INFO  valid result: 
+recall@10 : 0.0677    recall@20 : 0.1154    recall@30 : 0.1518    recall@40 : 0.1843    recall@50 : 0.2121    mrr@10 : 0.3533    mrr@20 : 0.3619    mrr@30 : 0.3642    mrr@40 : 0.365    mrr@50 : 0.3655    ndcg@10 : 0.1763    ndcg@20 : 0.1749    ndcg@30 : 0.1789    ndcg@40 : 0.1862    ndcg@50 : 0.1937    hit@10 : 0.6854    hit@20 : 0.8076    hit@30 : 0.8637    hit@40 : 0.8947    hit@50 : 0.9156    precision@10 : 0.1594    precision@20 : 0.1402    precision@30 : 0.1265    precision@40 : 0.1177    precision@50 : 0.1105    map@10 : 0.0865    map@20 : 0.0704    map@30 : 0.0654    map@40 : 0.0641    map@50 : 0.064
+26 May 22:38    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+Train     3: 100%|████████████████████████████████████████████████| 591/591 [03:40<00:00,  2.68it/s]
+Train     3: 100%|████████████████████████████████████████████████| 377/377 [00:17<00:00, 21.79it/s]
+26 May 22:42    INFO  epoch 3 training [time: 238.25s, train_loss1: 197.7787, train_loss2: 33.3998]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3374.52it/s]
+26 May 22:42    INFO  epoch 3 evaluating [time: 1.85s, valid_score: 0.378400]
+26 May 22:42    INFO  valid result: 
+recall@10 : 0.0757    recall@20 : 0.1246    recall@30 : 0.163    recall@40 : 0.1966    recall@50 : 0.2263    mrr@10 : 0.3784    mrr@20 : 0.3862    mrr@30 : 0.3883    mrr@40 : 0.3891    mrr@50 : 0.3895    ndcg@10 : 0.193    ndcg@20 : 0.1891    ndcg@30 : 0.1932    ndcg@40 : 0.2006    ndcg@50 : 0.2084    hit@10 : 0.7137    hit@20 : 0.8232    hit@30 : 0.8745    hit@40 : 0.9043    hit@50 : 0.9227    precision@10 : 0.1742    precision@20 : 0.1497    precision@30 : 0.1349    precision@40 : 0.1251    precision@50 : 0.1171    map@10 : 0.0967    map@20 : 0.0785    map@30 : 0.0731    map@40 : 0.0718    map@50 : 0.0717
+26 May 22:42    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+Train     4: 100%|████████████████████████████████████████████████| 591/591 [03:39<00:00,  2.69it/s]
+Train     4: 100%|████████████████████████████████████████████████| 377/377 [00:16<00:00, 22.24it/s]
+26 May 22:46    INFO  epoch 4 training [time: 237.15s, train_loss1: 181.3491, train_loss2: 26.5360]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3361.26it/s]
+26 May 22:46    INFO  epoch 4 evaluating [time: 1.86s, valid_score: 0.385600]
+26 May 22:46    INFO  valid result: 
+recall@10 : 0.0788    recall@20 : 0.1301    recall@30 : 0.1722    recall@40 : 0.207    recall@50 : 0.2372    mrr@10 : 0.3856    mrr@20 : 0.393    mrr@30 : 0.395    mrr@40 : 0.3959    mrr@50 : 0.3962    ndcg@10 : 0.1981    ndcg@20 : 0.1949    ndcg@30 : 0.2003    ndcg@40 : 0.2081    ndcg@50 : 0.2162    hit@10 : 0.7318    hit@20 : 0.8359    hit@30 : 0.8869    hit@40 : 0.9157    hit@50 : 0.9305    precision@10 : 0.1791    precision@20 : 0.1546    precision@30 : 0.1399    precision@40 : 0.1294    precision@50 : 0.1209    map@10 : 0.0997    map@20 : 0.0813    map@30 : 0.0761    map@40 : 0.0748    map@50 : 0.0749
+26 May 22:46    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+Train     5: 100%|████████████████████████████████████████████████| 591/591 [03:39<00:00,  2.69it/s]
+Train     5: 100%|████████████████████████████████████████████████| 377/377 [00:17<00:00, 21.83it/s]
+26 May 22:50    INFO  epoch 5 training [time: 237.66s, train_loss1: 171.2281, train_loss2: 22.3120]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3314.17it/s]
+26 May 22:50    INFO  epoch 5 evaluating [time: 1.89s, valid_score: 0.393100]
+26 May 22:50    INFO  valid result: 
+recall@10 : 0.0821    recall@20 : 0.1357    recall@30 : 0.1769    recall@40 : 0.2137    recall@50 : 0.2465    mrr@10 : 0.3931    mrr@20 : 0.4006    mrr@30 : 0.4024    mrr@40 : 0.403    mrr@50 : 0.4035    ndcg@10 : 0.2045    ndcg@20 : 0.2019    ndcg@30 : 0.2069    ndcg@40 : 0.215    ndcg@50 : 0.224    hit@10 : 0.7439    hit@20 : 0.8493    hit@30 : 0.8925    hit@40 : 0.9159    hit@50 : 0.9363    precision@10 : 0.1855    precision@20 : 0.1602    precision@30 : 0.1446    precision@40 : 0.1336    precision@50 : 0.1252    map@10 : 0.1032    map@20 : 0.0849    map@30 : 0.0797    map@40 : 0.0784    map@50 : 0.0786
+26 May 22:50    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+Train     6: 100%|████████████████████████████████████████████████| 591/591 [03:39<00:00,  2.69it/s]
+Train     6: 100%|████████████████████████████████████████████████| 377/377 [00:17<00:00, 21.74it/s]
+26 May 22:54    INFO  epoch 6 training [time: 237.70s, train_loss1: 163.9718, train_loss2: 19.6765]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3309.97it/s]
+26 May 22:54    INFO  epoch 6 evaluating [time: 1.89s, valid_score: 0.401600]
+26 May 22:54    INFO  valid result: 
+recall@10 : 0.0859    recall@20 : 0.1405    recall@30 : 0.1861    recall@40 : 0.2235    recall@50 : 0.2561    mrr@10 : 0.4016    mrr@20 : 0.4089    mrr@30 : 0.4106    mrr@40 : 0.4112    mrr@50 : 0.4115    ndcg@10 : 0.2095    ndcg@20 : 0.207    ndcg@30 : 0.2136    ndcg@40 : 0.2223    ndcg@50 : 0.2316    hit@10 : 0.7601    hit@20 : 0.8629    hit@30 : 0.9036    hit@40 : 0.9263    hit@50 : 0.9396    precision@10 : 0.1902    precision@20 : 0.1644    precision@30 : 0.149    precision@40 : 0.1379    precision@50 : 0.1295    map@10 : 0.1058    map@20 : 0.0873    map@30 : 0.0824    map@40 : 0.0815    map@50 : 0.082
+26 May 22:54    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+Train     7: 100%|████████████████████████████████████████████████| 591/591 [03:40<00:00,  2.68it/s]
+Train     7: 100%|████████████████████████████████████████████████| 377/377 [00:17<00:00, 22.13it/s]
+26 May 22:58    INFO  epoch 7 training [time: 238.19s, train_loss1: 157.7175, train_loss2: 17.7527]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3337.57it/s]
+26 May 22:58    INFO  epoch 7 evaluating [time: 1.87s, valid_score: 0.412600]
+26 May 22:58    INFO  valid result: 
+recall@10 : 0.0884    recall@20 : 0.1454    recall@30 : 0.1907    recall@40 : 0.2308    recall@50 : 0.2655    mrr@10 : 0.4126    mrr@20 : 0.4194    mrr@30 : 0.4211    mrr@40 : 0.4218    mrr@50 : 0.4222    ndcg@10 : 0.2159    ndcg@20 : 0.2136    ndcg@30 : 0.2196    ndcg@40 : 0.2294    ndcg@50 : 0.2394    hit@10 : 0.769    hit@20 : 0.8656    hit@30 : 0.9061    hit@40 : 0.9331    hit@50 : 0.9498    precision@10 : 0.1952    precision@20 : 0.1689    precision@30 : 0.1521    precision@40 : 0.1414    precision@50 : 0.1328    map@10 : 0.1102    map@20 : 0.0912    map@30 : 0.086    map@40 : 0.0853    map@50 : 0.086
+26 May 22:58    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+Train     8: 100%|████████████████████████████████████████████████| 591/591 [03:39<00:00,  2.69it/s]
+Train     8: 100%|████████████████████████████████████████████████| 377/377 [00:17<00:00, 22.08it/s]
+26 May 23:02    INFO  epoch 8 training [time: 237.71s, train_loss1: 151.4814, train_loss2: 15.7284]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3282.75it/s]
+26 May 23:02    INFO  epoch 8 evaluating [time: 1.90s, valid_score: 0.415100]
+26 May 23:02    INFO  valid result: 
+recall@10 : 0.0906    recall@20 : 0.1504    recall@30 : 0.1986    recall@40 : 0.2391    recall@50 : 0.275    mrr@10 : 0.4151    mrr@20 : 0.4219    mrr@30 : 0.4235    mrr@40 : 0.4242    mrr@50 : 0.4245    ndcg@10 : 0.2197    ndcg@20 : 0.2188    ndcg@30 : 0.2262    ndcg@40 : 0.236    ndcg@50 : 0.2464    hit@10 : 0.779    hit@20 : 0.8757    hit@30 : 0.9152    hit@40 : 0.9401    hit@50 : 0.9531    precision@10 : 0.1998    precision@20 : 0.1737    precision@30 : 0.1575    precision@40 : 0.1459    precision@50 : 0.1368    map@10 : 0.1124    map@20 : 0.0938    map@30 : 0.0891    map@40 : 0.0885    map@50 : 0.0894
+26 May 23:02    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+Train     9: 100%|████████████████████████████████████████████████| 591/591 [03:39<00:00,  2.69it/s]
+Train     9: 100%|████████████████████████████████████████████████| 377/377 [00:17<00:00, 21.98it/s]
+26 May 23:06    INFO  epoch 9 training [time: 237.67s, train_loss1: 146.6518, train_loss2: 13.9621]
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3331.36it/s]
+26 May 23:06    INFO  epoch 9 evaluating [time: 1.87s, valid_score: 0.423900]
+26 May 23:06    INFO  valid result: 
+recall@10 : 0.0936    recall@20 : 0.154    recall@30 : 0.2036    recall@40 : 0.2458    recall@50 : 0.2823    mrr@10 : 0.4239    mrr@20 : 0.4309    mrr@30 : 0.4324    mrr@40 : 0.433    mrr@50 : 0.4334    ndcg@10 : 0.225    ndcg@20 : 0.2234    ndcg@30 : 0.2316    ndcg@40 : 0.2421    ndcg@50 : 0.2524    hit@10 : 0.7839    hit@20 : 0.882    hit@30 : 0.9182    hit@40 : 0.9412    hit@50 : 0.956    precision@10 : 0.2041    precision@20 : 0.1766    precision@30 : 0.1611    precision@40 : 0.1496    precision@50 : 0.1397    map@10 : 0.1157    map@20 : 0.0964    map@30 : 0.092    map@40 : 0.0916    map@50 : 0.0924
+26 May 23:06    INFO  Saving current: saved/KGAT-May-26-2022_22-26-33.pth
+26 May 23:06    INFO  Loading model structure and parameters from saved/KGAT-May-26-2022_22-26-33.pth
+Evaluate   : 100%|████████████████████████████████████████████| 6040/6040 [00:01<00:00, 3588.36it/s]
+26 May 23:06    INFO  best valid : OrderedDict([('recall@10', 0.0936), ('recall@20', 0.154), ('recall@30', 0.2036), ('recall@40', 0.2458), ('recall@50', 0.2823), ('mrr@10', 0.4239), ('mrr@20', 0.4309), ('mrr@30', 0.4324), ('mrr@40', 0.433), ('mrr@50', 0.4334), ('ndcg@10', 0.225), ('ndcg@20', 0.2234), ('ndcg@30', 0.2316), ('ndcg@40', 0.2421), ('ndcg@50', 0.2524), ('hit@10', 0.7839), ('hit@20', 0.882), ('hit@30', 0.9182), ('hit@40', 0.9412), ('hit@50', 0.956), ('precision@10', 0.2041), ('precision@20', 0.1766), ('precision@30', 0.1611), ('precision@40', 0.1496), ('precision@50', 0.1397), ('map@10', 0.1157), ('map@20', 0.0964), ('map@30', 0.092), ('map@40', 0.0916), ('map@50', 0.0924)])
+26 May 23:06    INFO  test result: OrderedDict([('recall@10', 0.1092), ('recall@20', 0.1746), ('recall@30', 0.2251), ('recall@40', 0.2689), ('recall@50', 0.3068), ('mrr@10', 0.5144), ('mrr@20', 0.5202), ('mrr@30', 0.5217), ('mrr@40', 0.5223), ('mrr@50', 0.5226), ('ndcg@10', 0.3031), ('ndcg@20', 0.2865), ('ndcg@30', 0.2866), ('ndcg@40', 0.2927), ('ndcg@50', 0.3004), ('hit@10', 0.8088), ('hit@20', 0.8912), ('hit@30', 0.9268), ('hit@40', 0.9472), ('hit@50', 0.9603), ('precision@10', 0.2719), ('precision@20', 0.2259), ('precision@30', 0.2001), ('precision@40', 0.1825), ('precision@50', 0.1686), ('map@10', 0.1907), ('map@20', 0.1536), ('map@30', 0.1406), ('map@40', 0.1351), ('map@50', 0.1328)])
+{'best_valid_score': 0.4239,
+ 'valid_score_bigger': True,
+ 'best_valid_result': OrderedDict([('recall@10', 0.0936),
+              ('recall@20', 0.154),
+              ('recall@30', 0.2036),
+              ('recall@40', 0.2458),
+              ('recall@50', 0.2823),
+              ('mrr@10', 0.4239),
+              ('mrr@20', 0.4309),
+              ('mrr@30', 0.4324),
+              ('mrr@40', 0.433),
+              ('mrr@50', 0.4334),
+              ('ndcg@10', 0.225),
+              ('ndcg@20', 0.2234),
+              ('ndcg@30', 0.2316),
+              ('ndcg@40', 0.2421),
+              ('ndcg@50', 0.2524),
+              ('hit@10', 0.7839),
+              ('hit@20', 0.882),
+              ('hit@30', 0.9182),
+              ('hit@40', 0.9412),
+              ('hit@50', 0.956),
+              ('precision@10', 0.2041),
+              ('precision@20', 0.1766),
+              ('precision@30', 0.1611),
+              ('precision@40', 0.1496),
+              ('precision@50', 0.1397),
+              ('map@10', 0.1157),
+              ('map@20', 0.0964),
+              ('map@30', 0.092),
+              ('map@40', 0.0916),
+              ('map@50', 0.0924)]),
+ 'test_result': OrderedDict([('recall@10', 0.1092),
+              ('recall@20', 0.1746),
+              ('recall@30', 0.2251),
+              ('recall@40', 0.2689),
+              ('recall@50', 0.3068),
+              ('mrr@10', 0.5144),
+              ('mrr@20', 0.5202),
+              ('mrr@30', 0.5217),
+              ('mrr@40', 0.5223),
+              ('mrr@50', 0.5226),
+              ('ndcg@10', 0.3031),
+              ('ndcg@20', 0.2865),
+              ('ndcg@30', 0.2866),
+              ('ndcg@40', 0.2927),
+              ('ndcg@50', 0.3004),
+              ('hit@10', 0.8088),
+              ('hit@20', 0.8912),
+              ('hit@30', 0.9268),
+              ('hit@40', 0.9472),
+              ('hit@50', 0.9603),
+              ('precision@10', 0.2719),
+              ('precision@20', 0.2259),
+              ('precision@30', 0.2001),
+              ('precision@40', 0.1825),
+              ('precision@50', 0.1686),
+              ('map@10', 0.1907),
+              ('map@20', 0.1536),
+              ('map@30', 0.1406),
+              ('map@40', 0.1351),
+              ('map@50', 0.1328)])}
